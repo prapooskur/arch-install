@@ -3,4 +3,5 @@ timedatectl set-ntp true
 echo "Installing programs"
 pacstrap /mnt base linux linux-firmware vim networkmanager man-db man-pages texinfo btrfs-progs plasma-meta ntfs-3g openssh sudo zsh git base-devel plasma-wayland-session neofetch
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt /root/prapooskur-arch-install/arch-install-2
+cp arch-install-2 /mnt/
+arch-chroot /mnt ./arch-install-2 chroot

@@ -1,5 +1,5 @@
 # prapooskur-arch-install
-A (currently untested) script to install Arch Linux. Do not use right now.
+A (currently untested) script to install Arch Linux. Use at your own risk.
 
 **How to install**
 

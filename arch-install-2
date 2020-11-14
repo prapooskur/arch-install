@@ -1,0 +1,18 @@
+ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+hwclock --systohc
+#find a way to uncomment "en_US.UTF-8 UTF-8" in /etc/locale.gen
+sed -i -e 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo "Prasiddh" >> /etc/hostname
+echo -e "127.0.0.1      localhost\n::1          localhost\n127.0.1.1    Prasiddh.localdomain    Prasiddh" >> /etc/hosts
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd
+sed -i -e 's/#Color/Color/g' /etc/pacman.conf
+echo "Please set root password"
+passwd
+useradd -m prasiddh
+echo "Please set user password"
+passwd prasiddh

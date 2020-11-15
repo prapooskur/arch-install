@@ -12,10 +12,6 @@ echo -e 127.0.0.1	localhost::1		localhost127.0.1.1	$hostname.localdomain	$hostna
 sed -i -e 's/#Color/Color/g' /etc/pacman.conf
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable sddm.service
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-cd
 echo "Please set root password"
 passwd
 echo Input username:
@@ -25,7 +21,14 @@ echo "Please set user password"
 passwd $username
 echo Giving user root priveleges...
 #Do with visudo?
-echo $username   ALL=(ALL) ALL >> /etc/sudoers
+echo $username+"   ALL=(ALL) ALL" >> /etc/sudoers
+echo Installing paru...
+cd /home/$username
+git clone https://aur.archlinux.org/paru.git
+chown $username:$username paru/ -R
+cd paru
+sudo -u $username makepkg -si
+cd
 echo Setting shell to zsh...
 chsh -s /usr/bin/zsh $username
 chsh -s /usr/bin/zsh

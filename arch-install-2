@@ -14,7 +14,7 @@ sudo systemctl enable NetworkManager.service
 sudo systemctl enable sddm.service
 echo "Please set root password"
 passwd
-echo Input username (no caps):
+echo "Input username (no caps):"
 read username
 #User input
 useradd -m $username

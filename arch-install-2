@@ -22,7 +22,7 @@ echo "Giving user root priveleges..."
 #Do with visudo?
 echo $username" ALL=(ALL) ALL" >> /etc/sudoers
 echo "Installing additional packages..."
-pacman --noconfirm -Syu vim networkmanager man-db man-pages texinfo btrfs-progs plasma-meta breeze-gtk kdeconnect ntfs-3g openssh sudo zsh git base-devel plasma-wayland-session neofetch signal-desktop vlc yakuake htop calibre libreoffice-fresh reflector bat firefox xfce4-terminal
+pacman --noconfirm -Syu tmux vim networkmanager man-db man-pages texinfo btrfs-progs plasma-meta breeze-gtk kdeconnect ntfs-3g openssh sudo zsh git base-devel plasma-wayland-session neofetch signal-desktop vlc yakuake htop calibre libreoffice-fresh reflector bat firefox xfce4-terminal
 echo "Installing paru..."
 cd /home/$username
 git clone https://aur.archlinux.org/paru.git
@@ -37,23 +37,7 @@ echo "Setting shell to zsh..."
 chsh -s /usr/bin/zsh $username                                                                                                                                                                                                   
 chsh -s /usr/bin/zsh
 #This echo is ugly, but without it the zsh automatic setup launches
-echo "# The following lines were added by compinstall
-
-zstyle ':completion:*' completer _complete _ignored _correct _approximate
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' ''
-zstyle :compinstall filename '/home/prasiddh/.zshrc'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=5000
-unsetopt beep
-bindkey -v
-# End of lines configured by zsh-newuser-install
-" >> /home/$username/.zshrc
+echo -e "# The following lines were added by compinstall\n\nzstyle ':completion:*' completer _complete _ignored _correct _approximate\nzstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' ''\nzstyle :compinstall filename '/home/prasiddh/.zshrc'\n\nautoload -Uz compinit\ncompinit\n# End of lines added by compinstall\n# Lines configured by zsh-newuser-install\nHISTFILE=~/.histfile\nHISTSIZE=1000\nSAVEHIST=5000\nunsetopt beep\nbindkey -v\n# End of lines configured by zsh-newuser-install" >> /home/$username/.zshrc
 echo "Install AUR packages? This will take a while. [y/n]"
 read choice
 if [[ $choice == y* ]]; then
@@ -61,7 +45,7 @@ if [[ $choice == y* ]]; then
     echo "Installing AUR packages..."
     sudo -u $username paru --noconfirm -S starship bitwarden zoom-system-qt visual-studio-code-bin lightcord-bin downgrade bitwarden-cli plex-media-player nerd-fonts-complete signal-cli bluej intellij-idea-ultimate-edition-jre libreoffice-extension-languagetool gcalcli rslsync cordless-bin tldr-go-client-git microsoft-edge-dev-bin
     echo "Setting zsh theme... "
-    echo eval "$(starship init zsh)" >> .zshrc
+    echo "eval "$(starship init zsh)"" >> .zshrc
     exit
 else
     echo "Skipping AUR packages..."
@@ -80,6 +64,12 @@ echo alias mv='mv -i'>>/home/$username/.zshrc
 echo alias mv='mv -i'>>/home/$username/.bashrc
 echo alias cp='cp -i'>>/home/$username/.zshrc
 echo alias cp='cp -i'>>/home/$username/.bashrc
+#speed up commands
+echo alias mnt='mount'>>/home/$username/.zshrc
+echo alias mnt='mount'>>/home/$username/.bashrc
+echo alias clr='clear'>>/home/$username/.zshrc
+echo alias clr='clear'>>/home/$username/.bashrc
+
 #This shouldn't be necessary anymore
 #echo "Enabling services..."
 #systemctl enable NetworkManager.service

@@ -37,9 +37,9 @@ chsh -s /usr/bin/zsh
 echo "Install AUR packages? This will take a while. [y/n]"
 read choice
 if [[ $choice == y* ]]; then
+    #currently broken, need to find out how to run it as a different user
     echo "Installing AUR packages..."
-    su --login $username
-    paru -S starship bitwarden zoom-system-qt visual-studio-code-bin lightcord-bin downgrade bitwarden-cli plex-media-player nerd-fonts-complete signal-cli bluej intellij-idea-ultimate-edition-jre libreoffice-extension-languagetool gcalcli rslsync cordless-bin tldr-go-client-git microsoft-edge-dev-bin
+    sudo -u $username paru -S starship bitwarden zoom-system-qt visual-studio-code-bin lightcord-bin downgrade bitwarden-cli plex-media-player nerd-fonts-complete signal-cli bluej intellij-idea-ultimate-edition-jre libreoffice-extension-languagetool gcalcli rslsync cordless-bin tldr-go-client-git microsoft-edge-dev-bin
     echo "Setting zsh theme... "
     echo eval "$(starship init zsh)" >> .zshrc
     exit
@@ -60,6 +60,7 @@ echo alias mv='mv -i'>>/home/$username/.zshrc
 echo alias mv='mv -i'>>/home/$username/.bashrc
 echo alias cp='cp -i'>>/home/$username/.zshrc
 echo alias cp='cp -i'>>/home/$username/.bashrc
+echo "Enabling services..."
 systemctl enable NetworkManager.service
 systemctl enable sddm.service
-echo "Done! Make sure to install a bootloader and intel/amducode depending on your system"
+echo "Done! Make sure to install a bootloader and intel/amducode depending on your system."

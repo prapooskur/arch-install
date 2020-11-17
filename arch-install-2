@@ -1,7 +1,7 @@
 #!/bin/bash
 ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 hwclock --systohc
-#find a way to uncomment "en_US.UTF-8 UTF-8" in /etc/locale.gen
+#uncomment "en_US.UTF-8 UTF-8" in /etc/locale.gen
 sed -i -e 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
@@ -16,24 +16,48 @@ echo "Please set root password"
 passwd
 echo Input username:
 read username
+#User input
 useradd -m $username
 echo "Please set user password"
 passwd $username
 echo Giving user root priveleges...
 #Do with visudo?
-echo $username+"   ALL=(ALL) ALL" >> /etc/sudoers
+echo $username" ALL=(ALL) ALL" >> /etc/sudoers
 echo Installing paru...
 cd /home/$username
 git clone https://aur.archlinux.org/paru.git
 chown $username:$username paru/ -R
 cd paru
+#-u $username avoids makepkg erroring when run as root
 sudo -u $username makepkg -si
 cd
+#Remove install folder
+rm -rf paru/
 echo Setting shell to zsh...
-chsh -s /usr/bin/zsh $username
+chsh -s /usr/bin/zsh $username                                                                                                                                                                                                   
 chsh -s /usr/bin/zsh
 echo Adding aliases...
+#yay is the superior name
 echo alias yay='paru'>>/home/$username/.zshrc
 echo alias yay='paru'>>/home/$username/.bashrc
+#make sudo work with aliases
 echo alias sudo='sudo '>>/home/$username/.zshrc
 echo alias sudo='sudo '>>/home/$username/.bashrc
+#command confirmation
+echo alias rm='rm -i'>>/home/$username/.zshrc
+echo alias rm='rm -i'>>/home/$username/.bashrc
+echo alias mv='mv -i'>>/home/$username/.zshrc
+echo alias mv='mv -i'>>/home/$username/.bashrc
+echo alias cp='cp -i'>>/home/$username/.zshrc
+echo alias cp='cp -i'>>/home/$username/.bashrc
+echo Install AUR packages? This will take a while. [y/n]
+read choice
+if [[ $choice == y* ]]; then
+    echo Installing AUR packages...
+    paru -S starship bitwarden zoom visual-studio-code-bin lightcord-bin downgrade bitwarden-cli plex-media-player nerd-fonts-complete signal-cli bluej intellij-idea-ultimate-edition-jre libreoffice-extension-languagetool gcalcli rslsync cordless-bin tldr-go-client-git
+    echo Setting zsh theme... 
+    echo eval "$(starship init zsh)" >> .zshrc
+else
+    echo Skipping AUR packages...
+fi
+echo "Done! Make sure to install a bootloader and intel/amducode depending on your system"

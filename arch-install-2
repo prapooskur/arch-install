@@ -54,7 +54,7 @@ echo Install AUR packages? This will take a while. [y/n]
 read choice
 if [[ $choice == y* ]]; then
     echo Installing AUR packages...
-    paru -S starship bitwarden zoom visual-studio-code-bin lightcord-bin downgrade bitwarden-cli plex-media-player nerd-fonts-complete signal-cli bluej intellij-idea-ultimate-edition-jre libreoffice-extension-languagetool gcalcli rslsync cordless-bin tldr-go-client-git
+    paru -S starship bitwarden zoom visual-studio-code-bin lightcord-bin downgrade bitwarden-cli plex-media-player nerd-fonts-complete signal-cli bluej intellij-idea-ultimate-edition-jre libreoffice-extension-languagetool gcalcli rslsync cordless-bin tldr-go-client-git microsoft-edge-dev-bin
     echo Setting zsh theme... 
     echo eval "$(starship init zsh)" >> .zshrc
 else

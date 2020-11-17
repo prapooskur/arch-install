@@ -21,19 +21,39 @@ passwd $username
 echo "Giving user root priveleges..."
 #Do with visudo?
 echo $username" ALL=(ALL) ALL" >> /etc/sudoers
+echo "Installing additional packages..."
+pacman --noconfirm -Syu vim networkmanager man-db man-pages texinfo btrfs-progs plasma-meta breeze-gtk kdeconnect ntfs-3g openssh sudo zsh git base-devel plasma-wayland-session neofetch signal-desktop vlc yakuake htop calibre libreoffice-fresh reflector bat firefox xfce4-terminal
 echo "Installing paru..."
 cd /home/$username
 git clone https://aur.archlinux.org/paru.git
 chown $username:$username paru/ -R
 cd paru
 #-u $username avoids makepkg erroring when run as root
-sudo -u $username makepkg -si
+sudo -u $username makepkg -si --noconfirm
 cd
 #Remove install folder
 rm -rf paru/
 echo "Setting shell to zsh..."
 chsh -s /usr/bin/zsh $username                                                                                                                                                                                                   
 chsh -s /usr/bin/zsh
+#This echo is ugly, but without it the zsh automatic setup launches
+echo "# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete _ignored _correct _approximate
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' ''
+zstyle :compinstall filename '/home/prasiddh/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=5000
+unsetopt beep
+bindkey -v
+# End of lines configured by zsh-newuser-install
+" >> /home/$username/.zshrc
 echo "Install AUR packages? This will take a while. [y/n]"
 read choice
 if [[ $choice == y* ]]; then
@@ -60,7 +80,8 @@ echo alias mv='mv -i'>>/home/$username/.zshrc
 echo alias mv='mv -i'>>/home/$username/.bashrc
 echo alias cp='cp -i'>>/home/$username/.zshrc
 echo alias cp='cp -i'>>/home/$username/.bashrc
-echo "Enabling services..."
-systemctl enable NetworkManager.service
-systemctl enable sddm.service
+#This shouldn't be necessary anymore
+#echo "Enabling services..."
+#systemctl enable NetworkManager.service
+#systemctl enable sddm.service
 echo "Done! Make sure to install a bootloader and intel/amducode depending on your system."

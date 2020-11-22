@@ -20,6 +20,7 @@ echo "Please set user password"
 passwd $username
 #echo "Giving user root priveleges..."
 #Do with visudo? currently breaks sudo
+sed -i s/'root   ALL=(ALL) ALL'/'root   ALL=(ALL) ALL'\n$username'   ALL=(ALL) ALL'
 #echo $username" ALL=(ALL) ALL" >> /etc/sudoers
 echo "Installing additional packages..."
 pacman --noconfirm -Syu tmux vim networkmanager man-db man-pages texinfo btrfs-progs plasma-meta breeze-gtk kdeconnect ntfs-3g openssh sudo zsh git base-devel plasma-wayland-session neofetch signal-desktop vlc yakuake htop calibre libreoffice-fresh reflector bat firefox xfce4-terminal
@@ -29,7 +30,7 @@ git clone https://aur.archlinux.org/paru.git
 chown $username:$username paru/ -R
 cd paru
 #-u $username avoids makepkg erroring when run as root
-su -u $username makepkg -si --noconfirm
+sudo -u $username makepkg -si --noconfirm
 cd
 #Remove install folder
 rm -rf paru/

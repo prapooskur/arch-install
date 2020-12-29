@@ -37,14 +37,14 @@ rm -rf paru/
 echo "Setting shell to zsh..."
 chsh -s /usr/bin/zsh $username                                                                                                                                                                                                   
 chsh -s /usr/bin/zsh
-#This echo is ugly, but without it the zsh automatic setup launches
+#This echo is ugly, but without it the zsh automatic setup launches when running sudo -u $username
 echo -e "# The following lines were added by compinstall\n\nzstyle ':completion:*' completer _complete _ignored _correct _approximate\nzstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' ''\nzstyle :compinstall filename '/home/prasiddh/.zshrc'\n\nautoload -Uz compinit\ncompinit\n# End of lines added by compinstall\n# Lines configured by zsh-newuser-install\nHISTFILE=~/.histfile\nHISTSIZE=1000\nSAVEHIST=5000\nunsetopt beep\nbindkey -v\n# End of lines configured by zsh-newuser-install" >> /home/$username/.zshrc
 echo "Install AUR packages? This will take a while. [y/n]"
 read choice
 if [[ $choice == y* ]]; then
     #currently broken, need to find out how to run it as a different user
     echo "Installing AUR packages..."
-    sudo -u $username paru --noconfirm -S starship bitwarden zoom-system-qt visual-studio-code-bin lightcord-bin downgrade bitwarden-cli plex-media-player nerd-fonts-complete signal-cli bluej intellij-idea-ultimate-edition-jre libreoffice-extension-languagetool gcalcli rslsync cordless-bin tldr-go-client-git microsoft-edge-dev-bin
+    sudo -u $username paru --noconfirm -S starship nerd-fonts-complete
     echo "Setting zsh theme... "
     echo 'eval "$(starship init zsh)"' >> .zshrc
     exit

@@ -23,7 +23,7 @@ passwd $username
 sed -i s/'root   ALL=(ALL) ALL'/'root   ALL=(ALL) ALL\n'$username'   ALL=(ALL) ALL'/ /etc/sudoers
 #echo $username" ALL=(ALL) ALL" >> /etc/sudoers
 echo "Installing additional packages..."
-pacman --noconfirm -Syu tmux vim networkmanager man-db man-pages texinfo btrfs-progs plasma-meta breeze-gtk kdeconnect ntfs-3g openssh sudo zsh git base-devel plasma-wayland-session neofetch signal-desktop vlc yakuake htop calibre libreoffice-fresh reflector bat firefox xfce4-terminal
+pacman --noconfirm -Syu vim networkmanager man-db man-pages texinfo btrfs-progs plasma-meta breeze-gtk kdeconnect ntfs-3g openssh sudo zsh git base-devel plasma-wayland-session neofetch signal-desktop vlc yakuake htop reflector bat firefox xfce4-terminal
 echo "Installing paru..."
 cd /home/$username
 git clone https://aur.archlinux.org/paru.git
@@ -37,14 +37,14 @@ rm -rf paru/
 echo "Setting shell to zsh..."
 chsh -s /usr/bin/zsh $username                                                                                                                                                                                                   
 chsh -s /usr/bin/zsh
-#This echo is ugly, but without it the zsh automatic setup launches
-echo -e "# The following lines were added by compinstall\n\nzstyle ':completion:*' completer _complete _ignored _correct _approximate\nzstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' ''\nzstyle :compinstall filename '/home/prasiddh/.zshrc'\n\nautoload -Uz compinit\ncompinit\n# End of lines added by compinstall\n# Lines configured by zsh-newuser-install\nHISTFILE=~/.histfile\nHISTSIZE=1000\nSAVEHIST=5000\nunsetopt beep\nbindkey -v\n# End of lines configured by zsh-newuser-install" >> /home/$username/.zshrc
+#This echo is ugly, but without it the zsh automatic setup launches when running sudo -u $username
+echo -e "# The following lines were added by compinstall\n\nzstyle ':completion:*' completer _complete _ignored _correct _approximate\nzstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' ''\nzstyle :compinstall filename '/home/$username/.zshrc'\n\nautoload -Uz compinit\ncompinit\n# End of lines added by compinstall\n# Lines configured by zsh-newuser-install\nHISTFILE=~/.histfile\nHISTSIZE=1000\nSAVEHIST=5000\nunsetopt beep\nbindkey -v\n# End of lines configured by zsh-newuser-install" >> /home/$username/.zshrc
 echo "Install AUR packages? This will take a while. [y/n]"
 read choice
 if [[ $choice == y* ]]; then
     #currently broken, need to find out how to run it as a different user
     echo "Installing AUR packages..."
-    sudo -u $username paru --noconfirm -S starship nerd-fonts-complete
+    sudo -u $username paru --noconfirm -S starship-bin nerd-fonts-complete 1password
     echo "Setting zsh theme... "
     echo 'eval "$(starship init zsh)"' >> .zshrc
     exit
@@ -75,4 +75,4 @@ echo alias clr='clear'>>/home/$username/.bashrc
 #echo "Enabling services..."
 #systemctl enable NetworkManager.service
 #systemctl enable sddm.service
-echo "Done! Make sure to install a bootloader and intel/amducode depending on your system."
+echo "Done! Make sure to install a bootloader and enable microcode updates."

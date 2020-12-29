@@ -1,6 +1,6 @@
 #!/bin/bash
 timedatectl set-ntp true
-echo "Installing programs."
+echo "Installing programs..."
 pacstrap /mnt base linux linux-firmware 
 genfstab -U /mnt >> /mnt/etc/fstab
 cp arch-install-2 /mnt/

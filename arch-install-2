@@ -74,3 +74,5 @@ echo alias clr='clear'>>/home/$username/.bashrc
 #systemctl enable NetworkManager.service
 #systemctl enable sddm.service
 echo "Done! Make sure to install a bootloader and enable microcode updates."
+echo "chrooting into system now."
+arch-chroot /mnt

@@ -1,5 +1,9 @@
 #!/bin/bash
 timedatectl set-ntp true
+fdisk -l
+echo "Which partition would you like to install to?"
+read partition
+mount $partition /mnt
 echo "Installing programs..."
 pacstrap /mnt base linux linux-firmware 
 genfstab -U /mnt >> /mnt/etc/fstab

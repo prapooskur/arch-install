@@ -10,3 +10,6 @@ pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 cp arch-install-2 /mnt/
 arch-chroot /mnt ./arch-install-2 chroot
+#this runs after second file completes
+echo "chrooting into system now."
+arch-chroot /mnt

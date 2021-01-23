@@ -13,3 +13,4 @@ arch-chroot /mnt ./arch-install-2 chroot
 #this runs after second file completes
 echo "chrooting into system now."
 arch-chroot /mnt
+#this is a tesr
